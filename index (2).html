@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    
+    <!-- SEO & META TAGS -->
+    <title>Código do Lucro | Engenharia de Custos e Precificação</title>
+    <meta name="description" content="Engenheiro: Pare de chutar preços. Domine a engenharia de custos, aprenda a precificar projetos com precisão e dobre seus lucros com o método Código do Lucro." />
+    <meta name="keywords" content="engenharia de custos, orçamento de obras, precificação projetos, engenharia civil, arquitetura, bdi, construção civil" />
+    <meta name="author" content="Código do Lucro" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- OPEN GRAPH (Para WhatsApp, Facebook, LinkedIn) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Código do Lucro - Pare de Adivinhar Preços" />
+    <meta property="og:description" content="O método definitivo para precificar projetos de engenharia com precisão cirúrgica." />
+    <meta property="og:image" content="https://lh3.googleusercontent.com/aida-public/AB6AXuC8SXk1ZzsB26rNTF-IflwV9VVgliHldUUm--yHf3umtWdA5prC-cdtQPAoXppc2_4r5cRHPpCk9w6GmRrbS8DBAw3geSWIZ_qxWo1w7CjmAAt4jZBNDsLAi1juo9pEqbfXMbDGv6Cg_HHuBHnGw2-t5qy1ku_HPIXjozCUcGaJ4KnqXsQAdwv0aCQpgV9RH8WZfsqrnOq3Idjh6F5V6G7j4HY7w28FZhA1FraRSAwRvkLczGKe8pHKnf8Ro3LpPm4g5IqMr__Tapw" />
+    <meta property="og:url" content="https://tudominio.com" />
+
+    <!-- Tailwind CSS v3 -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+    <script>
+        tailwind.config = {
+          theme: {
+            container: {
+              center: true,
+              padding: '1.5rem',
+              screens: {
+                sm: '600px',
+                md: '728px',
+                lg: '984px',
+                xl: '1240px',
+              },
+            },
+            extend: {
+              colors: {
+                deepNavy: '#02060d',
+                accentGreen: '#00e676',
+                accentGold: '#ffb74d',
+                cardBg: '#0b121e',
+              },
+              fontFamily: {
+                sans: ['Montserrat', 'sans-serif'],
+              },
+              boxShadow: {
+                'glow-green': '0 0 25px rgba(0, 230, 118, 0.25)',
+                'glow-gold': '0 0 20px rgba(255, 183, 77, 0.2)',
+              },
+              animation: {
+                'float': 'float 6s ease-in-out infinite',
+                'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              },
+              keyframes: {
+                float: {
+                  '0%, 100%': { transform: 'translateY(0)' },
+                  '50%': { transform: 'translateY(-15px)' },
+                }
+              }
+            }
+          }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #02060d;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            color: #e5e7eb;
+        }
+
+        /* PARALLAX GRID BACKGROUND */
+        .bg-grid-animation {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-size: 60px 60px;
+            background-image: 
+                linear-gradient(to right, rgba(0, 230, 118, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 230, 118, 0.03) 1px, transparent 1px);
+            z-index: -1;
+            /* Optimized for mobile performance */
+            transform: translateZ(0); 
+            animation: gridMove 30s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 60px; }
+        }
+
+        /* SVG ANIMATION */
+        .draw-path {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: draw 2s ease-out forwards;
+        }
+        .group:hover .draw-path {
+            stroke-dashoffset: 100; 
+            animation: draw 1.5s ease-out forwards; 
+        }
+        @keyframes draw { to { stroke-dashoffset: 0; } }
+
+        /* SCROLL REVEAL UTILITIES */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+            will-change: opacity, transform;
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* MODULE UNFOLD LOGIC */
+        .module-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .module-card.active { opacity: 1; transform: translateY(0); }
+
+        .module-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-in;
+        }
+        .module-card.active .module-content {
+            max-height: 300px; /* Space for content */
+            opacity: 1;
+        }
+        
+        /* Icon Interaction */
+        .module-icon-wrapper { transition: transform 0.4s ease; }
+        .module-card.active .module-icon-wrapper { transform: scale(1.1) rotate(5deg); }
+
+        /* BUTTON EFFECTS */
+        .custom-btn-hover:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(0, 230, 118, 0.5); }
+        
+        /* SHINE ANIMATION */
+        @keyframes shine { 100% { left: 200%; } }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #02060d; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 5px; border: 2px solid #02060d; }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- GLOBAL BACKGROUND RADIAL (Fixed to avoid repaint) -->
+    <div class="fixed inset-0 z-0 pointer-events-none" style="background: radial-gradient(circle at 50% 0%, #0f331e 0%, #02060d 70%);"></div>
+    <div class="bg-grid-animation pointer-events-none"></div>
+
+    <main class="relative z-10">
+
+        <!-- HEADER / HERO SECTION -->
+        <header class="min-h-[90vh] flex flex-col justify-center items-center text-center px-4 md:px-6 py-12 md:py-20 max-w-7xl mx-auto">
+            
+            <div class="inline-block px-4 py-1 rounded-full border border-accentGreen/30 bg-accentGreen/5 text-accentGreen text-xs md:text-sm font-bold tracking-widest uppercase mb-6 reveal">
+                Engenharia de Custos Avançada
+            </div>
+
+            <!-- Responsive Heading -->
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white uppercase tracking-tight mb-6 drop-shadow-2xl reveal leading-tight">
+                Pare de <br class="md:hidden" /> 
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-accentGreen to-emerald-600">Adivinhar Preços</span>
+            </h1>
+            
+            <p class="text-gray-300 text-lg md:text-xl lg:text-2xl font-medium mb-10 leading-relaxed max-w-3xl mx-auto reveal" style="transition-delay: 100ms;">
+                Engenheiro: aprenda a precificar projetos com <span class="text-white font-bold">precisão cirúrgica</span> e dobre seus lucros antes de iniciar a obra.
+            </p>
+            
+            <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto mb-16 reveal" style="transition-delay: 200ms;">
+                <a href="#pricing" class="relative overflow-hidden bg-accentGreen text-black font-extrabold py-4 px-10 rounded-full text-base md:text-lg shadow-[0_0_20px_rgba(0,230,118,0.4)] transition-all custom-btn-hover animate-pulse-slow text-center group">
+                    <span class="relative z-10">QUERO SABER MAIS</span>
+                    <div class="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[30deg] group-hover:animate-[shine_0.75s_ease-in-out]"></div>
+                </a>
+            </div>
+
+            <!-- Video Placeholder (Responsive Aspect Ratio) -->
+            <div class="reveal relative w-full max-w-4xl aspect-video bg-black rounded-2xl shadow-glow-green border border-gray-800 flex items-center justify-center group cursor-pointer overflow-hidden transform transition hover:scale-[1.01] duration-500" style="transition-delay: 300ms;">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20"></div>
+                <!-- Play Button -->
+                <div class="relative z-10 w-20 h-20 flex items-center justify-center">
+                    <div class="absolute w-full h-full rounded-full bg-accentGreen opacity-20 animate-ping"></div>
+                    <div class="relative w-20 h-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center group-hover:bg-accentGreen group-hover:text-black transition-colors duration-300">
+                        <i class="fas fa-play text-white group-hover:text-black text-3xl ml-2"></i>
+                    </div>
+                </div>
+                <div class="absolute bottom-6 left-0 w-full text-center">
+                    <p class="text-xs md:text-sm text-gray-400 uppercase tracking-widest font-bold">Assista à Apresentação</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- PROBLEM SECTION -->
+        <section class="py-20 px-4 bg-gradient-to-b from-transparent to-[#050b16]">
+            <div class="container mx-auto max-w-6xl">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-2">O Problema Oculto</h2>
+                    <p class="text-accentGold font-medium">Por que você está perdendo dinheiro?</p>
+                </div>
+
+                <!-- Responsive Grid: 1 col mobile, 3 cols desktop -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                    
+                    <!-- Card 1 -->
+                    <div class="reveal bg-cardBg border border-gray-800 p-8 rounded-2xl text-center shadow-lg hover:border-accentGreen/50 transition duration-300 group">
+                        <div class="flex justify-center mb-6 h-12">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#00e676" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path class="draw-path" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline class="draw-path" points="14 2 14 8 20 8"></polyline>
+                                <line class="draw-path" x1="16" y1="13" x2="8" y2="13"></line>
+                                <line class="draw-path" x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline class="draw-path" points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </div>
+                        <h3 class="text-white font-bold text-xl mb-3">Erros de Orçamento</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Esquecer custos invisíveis e indiretos é o erro #1 que destrói a lucratividade de pequenas e médias construtoras.
+                        </p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="reveal bg-cardBg border border-gray-800 p-8 rounded-2xl text-center shadow-lg hover:border-accentGreen/50 transition duration-300 group" style="transition-delay: 100ms;">
+                        <div class="flex justify-center mb-6 h-12">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#00e676" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline class="draw-path" points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline>
+                                <polyline class="draw-path" points="17 18 23 18 23 12"></polyline>
+                            </svg>
+                        </div>
+                        <h3 class="text-white font-bold text-xl mb-3">Margem Baixa</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Trabalhar muito para ver pouco dinheiro sobrando no final. A falta de estratégia de precificação impede o crescimento.
+                        </p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="reveal bg-cardBg border border-gray-800 p-8 rounded-2xl text-center shadow-lg hover:border-accentGreen/50 transition duration-300 group" style="transition-delay: 200ms;">
+                        <div class="flex justify-center mb-6 h-12">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#00e676" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" class="draw-path"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" class="draw-path"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-white font-bold text-xl mb-3">Insegurança</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            O medo constante de "levar prejuízo" ao enviar uma proposta. Acabe com a síndrome do impostor nos seus orçamentos.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SOLUTION SECTION -->
+        <section class="py-20 px-4">
+            <div class="container mx-auto max-w-6xl flex flex-col md:flex-row items-center gap-12">
+                
+                <!-- Image Column -->
+                <div class="w-full md:w-1/2 reveal">
+                    <div class="relative aspect-square max-w-md mx-auto rounded-2xl overflow-hidden border border-accentGreen/30 shadow-glow-green animate-float">
+                        <!-- Laser Scan Effect -->
+                        <div class="absolute w-full h-[2px] bg-accentGreen/80 blur-[4px] animate-[ping_3s_linear_infinite]" style="animation-direction: alternate; top: 50%;"></div>
+                        <img alt="Metodologia Código do Lucro - Chip Processador" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8SXk1ZzsB26rNTF-IflwV9VVgliHldUUm--yHf3umtWdA5prC-cdtQPAoXppc2_4r5cRHPpCk9w6GmRrbS8DBAw3geSWIZ_qxWo1w7CjmAAt4jZBNDsLAi1juo9pEqbfXMbDGv6Cg_HHuBHnGw2-t5qy1ku_HPIXjozCUcGaJ4KnqXsQAdwv0aCQpgV9RH8WZfsqrnOq3Idjh6F5V6G7j4HY7w28FZhA1FraRSAwRvkLczGKe8pHKnf8Ro3LpPm4g5IqMr__Tapw" class="object-cover w-full h-full" loading="lazy" />
+                    </div>
+                </div>
+
+                <!-- Text Column -->
+                <div class="w-full md:w-1/2 text-left reveal" style="transition-delay: 200ms;">
+                    <span class="text-accentGreen font-bold tracking-wider uppercase mb-2 block">A Solução Definitiva</span>
+                    <h2 class="text-3xl md:text-5xl font-black text-white mb-6">O Código do Lucro</h2>
+                    <p class="text-gray-300 text-base md:text-lg leading-relaxed mb-6">
+                        Não é mágica, é <strong>Engenharia de Custos Aplicada</strong>. O Código do Lucro é um ecossistema completo (Metodologia + Ferramentas) para você precificar qualquer obra.
+                    </p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center text-gray-400"><i class="fas fa-check-circle text-accentGreen mr-3"></i> Elimine o "chutômetro".</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-check-circle text-accentGreen mr-3"></i> Controle financeiro total.</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-check-circle text-accentGreen mr-3"></i> Ferramentas automatizadas.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULES SECTION (SCROLL UNFOLD) -->
+        <section class="py-20 px-4 bg-gray-900/40 border-y border-white/5">
+            <div class="container mx-auto max-w-4xl">
+                <div class="text-center mb-12 reveal">
+                    <h3 class="text-2xl md:text-3xl font-bold text-white uppercase">O Caminho da Maestria</h3>
+                    <p class="text-gray-500 mt-2">6 Passos para o Domínio Financeiro da Obra</p>
+                </div>
+                
+                <!-- Modules Container -->
+                <div class="space-y-4">
+                    
+                    <!-- Módulo 1 -->
+                    <article class="module-card bg-cardBg border border-white/10 rounded-xl shadow-sm overflow-hidden hover:border-white/20 transition-colors">
+                        <div class="flex items-center p-5 md:p-6 relative z-10 bg-cardBg cursor-default">
+                            <div class="module-icon-wrapper mr-5 bg-white/5 p-3 rounded-lg">
+                                <i class="fas fa-calculator text-accentGold text-xl md:text-2xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <span class="text-accentGreen text-xs font-bold uppercase tracking-widest block mb-1">Módulo 01</span>
+                                <h4 class="text-white text-base md:text-lg font-bold">Fundamentos de Custo & BDI</h4>
+                            </div>
+                            <i class="fas fa-chevron-down text-gray-600"></i>
+                        </div>
+                        <div class="module-content px-6 md:px-8 pb-6 bg-cardBg/50">
+                            <p class="text-gray-400 text-sm md:text-base leading-relaxed border-l-2 border-accentGreen pl-4">
+                                Aprenda a diferenciar custos diretos, indiretos e invisíveis. Desenvolva um BDI matematicamente perfeito que protege seu lucro contra imprevistos e impostos.
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- Módulo 2 -->
+                    <article class="module-card bg-cardBg border border-white/10 rounded-xl shadow-sm overflow-hidden hover:border-white/20 transition-colors">
+                        <div class="flex items-center p-5 md:p-6 relative z-10 bg-cardBg cursor-default">
+                            <div class="module-icon-wrapper mr-5 bg-white/5 p-3 rounded-lg">
+                                <i class="fas fa-search-dollar text-accentGold text-xl md:text-2xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <span class="text-accentGreen text-xs font-bold uppercase tracking-widest block mb-1">Módulo 02</span>
+                                <h4 class="text-white text-base md:text-lg font-bold">Análise de Mercado</h4>
+                            </div>
+                            <i class="fas fa-chevron-down text-gray-600"></i>
+                        </div>
+                        <div class="module-content px-6 md:px-8 pb-6 bg-cardBg/50">
+                            <p class="text-gray-400 text-sm md:text-base leading-relaxed border-l-2 border-accentGreen pl-4">
+                                Como espionar eticamente a concorrência e posicionar seu preço. Entenda quanto o mercado paga e como cobrar mais caro sendo percebido como autoridade.
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- Módulo 3 -->
+                    <article class="module-card bg-cardBg border border-white/10 rounded-xl shadow-sm overflow-hidden hover:border-white/20 transition-colors">
+                        <div class="flex items-center p-5 md:p-6 relative z-10 bg-cardBg cursor-default">
+                            <div class="module-icon-wrapper mr-5 bg-white/5 p-3 rounded-lg">
+                                <i class="fas fa-chart-pie text-accentGold text-xl md:text-2xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <span class="text-accentGreen text-xs font-bold uppercase tracking-widest block mb-1">Módulo 03</span>
+                                <h4 class="text-white text-base md:text-lg font-bold">Precificação Estratégica</h4>
+                            </div>
+                            <i class="fas fa-chevron-down text-gray-600"></i>
+                        </div>
+                        <div class="module-content px-6 md:px-8 pb-6 bg-cardBg/50">
+                            <p class="text-gray-400 text-sm md:text-base leading-relaxed border-l-2 border-accentGreen pl-4">
+                                A matemática exata da Margem de Contribuição. Saia da guerra de preços e entre no jogo do valor agregado.
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- Módulo 4 -->
+                    <article class="module-card bg-cardBg border border-white/10 rounded-xl shadow-sm overflow-hidden hover:border-white/20 transition-colors">
+                        <div class="flex items-center p-5 md:p-6 relative z-10 bg-cardBg cursor-default">
+                            <div class="module-icon-wrapper mr-5 bg-white/5 p-3 rounded-lg">
+                                <i class="fas fa-handshake text-accentGold text-xl md:text-2xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <span class="text-accentGreen text-xs font-bold uppercase tracking-widest block mb-1">Módulo 04</span>
+                                <h4 class="text-white text-base md:text-lg font-bold">Negociação & Fechamento</h4>
+                            </div>
+                            <i class="fas fa-chevron-down text-gray-600"></i>
+                        </div>
+                        <div class="module-content px-6 md:px-8 pb-6 bg-cardBg/50">
+                            <p class="text-gray-400 text-sm md:text-base leading-relaxed border-l-2 border-accentGreen pl-4">
+                                Scripts de vendas, gatilhos mentais e modelos de proposta comercial que transformam orçamentos em contratos assinados.
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- Módulo 5 -->
+                    <article class="module-card bg-cardBg border border-white/10 rounded-xl shadow-sm overflow-hidden hover:border-white/20 transition-colors">
+                        <div class="flex items-center p-5 md:p-6 relative z-10 bg-cardBg cursor-default">
+                            <div class="module-icon-wrapper mr-5 bg-white/5 p-3 rounded-lg">
+                                <i class="fas fa-laptop-code text-accentGold text-xl md:text-2xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <span class="text-accentGreen text-xs font-bold uppercase tracking-widest block mb-1">Módulo 05</span>
+                                <h4 class="text-white text-base md:text-lg font-bold">Ferramentas Digitais</h4>
+                            </div>
+                            <i class="fas fa-chevron-down text-gray-600"></i>
+                        </div>
+                        <div class="module-content px-6 md:px-8 pb-6 bg-cardBg/50">
+                            <p class="text-gray-400 text-sm md:text-base leading-relaxed border-l-2 border-accentGreen pl-4">
+                                Automação do processo. Softwares essenciais que reduzem o tempo de elaboração de orçamentos em até 80%.
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- MÓDULO 6 (BÔNUS) - ESTILO GOLD -->
+                    <article class="module-card relative bg-gradient-to-r from-yellow-900/30 to-cardBg border border-accentGold rounded-xl shadow-[0_0_15px_rgba(255,183,77,0.15)] overflow-hidden group">
+                        <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none"></div>
+                        
+                        <div class="flex items-center p-5 md:p-6 relative z-10 cursor-default">
+                            <div class="module-icon-wrapper mr-5 bg-accentGold/10 p-3 rounded-lg border border-accentGold/30">
+                                <i class="fas fa-gift text-accentGold text-xl md:text-2xl animate-pulse"></i>
+                            </div>
+                            <div class="flex-1">
+                                <span class="text-accentGold text-xs font-bold uppercase tracking-widest mb-1 flex items-center gap-2">
+                                    <i class="fas fa-star text-[10px]"></i> Bônus Exclusivo
+                                </span>
+                                <h4 class="text-white text-base md:text-lg font-bold">Módulo 06: A Planilha Mestra na Prática</h4>
+                            </div>
+                            <i class="fas fa-chevron-down text-accentGold"></i>
+                        </div>
+                        
+                        <div class="module-content px-6 md:px-8 pb-6">
+                            <p class="text-gray-200 text-sm md:text-base leading-relaxed border-l-2 border-accentGold pl-4">
+                                Você vai receber a minha <strong>Planilha de Orçamento Automatizada</strong> (Excel) e vamos preenchê-la juntos, passo a passo, simulando uma obra real do zero. Apenas este módulo vale o preço do curso.
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING SECTION -->
+        <section class="py-24 px-4 relative overflow-hidden" id="pricing">
+            <!-- Background Glow -->
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-lg h-full bg-accentGold/5 blur-[80px] rounded-full z-0 pointer-events-none"></div>
+            
+            <div class="container mx-auto max-w-lg relative z-10">
+                <div class="reveal bg-[#050b16] border border-accentGold rounded-3xl p-8 md:p-12 text-center shadow-glow-gold hover:shadow-[0_0_40px_rgba(255,183,77,0.3)] transition duration-500">
+                    
+                    <div class="inline-block bg-accentGold/10 text-accentGold font-bold px-4 py-1 rounded-full text-xs uppercase tracking-widest mb-6">
+                        Oferta por Tempo Limitado
+                    </div>
+                    
+                    <div class="flex justify-center items-end mb-8">
+                        <span class="text-xl text-gray-400 font-medium mr-2 mb-2">12x de</span>
+                        <span class="text-5xl md:text-6xl font-black text-white">R$ 309</span>
+                        <span class="text-xl text-white font-bold mb-2">,96</span>
+                    </div>
+                    
+                    <ul class="text-gray-300 space-y-4 mb-10 text-left md:text-center text-sm md:text-base">
+                        <li class="flex items-center md:justify-center gap-3"><i class="fas fa-check text-accentGreen"></i> Acesso Vitalício ao Conteúdo</li>
+                        <li class="flex items-center md:justify-center gap-3"><i class="fas fa-check text-accentGreen"></i> <strong>Bônus:</strong> Módulo Prático (Planilha)</li>
+                        <li class="flex items-center md:justify-center gap-3"><i class="fas fa-check text-accentGreen"></i> Download da Planilha Editável</li>
+                        <li class="flex items-center md:justify-center gap-3"><i class="fas fa-check text-accentGreen"></i> Suporte com Engenheiros</li>
+                    </ul>
+                    
+                    <button class="w-full bg-accentGreen text-black font-extrabold py-5 px-6 rounded-xl text-lg shadow-[0_4px_20px_rgba(0,230,118,0.4)] transition-all transform hover:-translate-y-1 custom-btn-hover group overflow-hidden relative">
+                        <span class="relative z-10">GARANTIR MINHA VAGA AGORA</span>
+                        <div class="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[30deg] group-hover:animate-[shine_0.75s_ease-in-out]"></div>
+                    </button>
+                    
+                    <p class="mt-6 text-xs text-gray-500 flex items-center justify-center gap-2">
+                        <i class="fas fa-lock"></i> Pagamento 100% Seguro via Hotmart
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER / GUARANTEE -->
+        <footer class="py-12 px-6 text-center bg-[#010408] border-t border-white/5 relative z-10">
+            <div class="container mx-auto">
+                <div class="mb-12 reveal max-w-2xl mx-auto">
+                    <div class="inline-block p-4 rounded-full bg-accentGreen/10 mb-4 border border-accentGreen/20">
+                        <i class="fas fa-shield-alt text-4xl text-accentGreen"></i>
+                    </div>
+                    <h4 class="text-white font-bold text-2xl mb-2">Garantia Incondicional de 7 Dias</h4>
+                    <p class="text-gray-400 text-sm">
+                        Entre, assista às aulas, baixe a planilha. Se você achar que não valeu o investimento, devolvemos cada centavo. Sem letras miúdas.
+                    </p>
+                </div>
+                
+                <div class="flex flex-wrap justify-center items-center gap-4 mb-10 reveal" style="transition-delay: 100ms;">
+                    <div class="flex items-center gap-2 px-5 py-2 rounded-full border border-white/10 bg-white/5"><i class="fas fa-lock text-accentGreen text-xs"></i><span class="text-xs text-gray-300 font-bold uppercase">SSL Seguro</span></div>
+                    <div class="flex items-center gap-2 px-5 py-2 rounded-full border border-white/10 bg-white/5"><i class="fas fa-check text-accentGreen text-xs"></i><span class="text-xs text-gray-300 font-bold uppercase">Dados Protegidos</span></div>
+                </div>
+                
+                <p class="text-gray-600 text-xs">
+                    Código do Lucro © 2026 - Todos os direitos reservados. <br>
+                    <span class="opacity-50">CNPJ: 00.000.000/0001-00</span>
+                </p>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            
+            // --- CONFIGURATION ---
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 // 15% visibility triggers animation
+            };
+
+            // --- 1. SCROLL REVEAL (FADE UP) ---
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        revealObserver.unobserve(entry.target); // Animate only once
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+            // --- 2. MODULE UNFOLD ANIMATION ---
+            const moduleObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Stagger effect: delay based on index for a "waterfall" feel
+                        setTimeout(() => {
+                            entry.target.classList.add('active');
+                        }, index * 150); 
+                        
+                        moduleObserver.unobserve(entry.target);
+                    }
+                });
+            }, { ...observerOptions, threshold: 0.3 }); // Needs 30% visibility
+
+            document.querySelectorAll('.module-card').forEach(el => moduleObserver.observe(el));
+        });
+    </script>
+
+</body>
+</html>
