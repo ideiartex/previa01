@@ -7,17 +7,7 @@
     <!-- SEO & META TAGS -->
     <title>Código do Lucro | Engenharia de Custos e Precificação</title>
     <meta name="description" content="Engenheiro: Pare de chutar preços. Domine a engenharia de custos, aprenda a precificar projetos com precisão e dobre seus lucros com o método Código do Lucro." />
-    <meta name="keywords" content="engenharia de custos, orçamento de obras, precificação projetos, engenharia civil, arquitetura, bdi, construção civil" />
-    <meta name="author" content="Código do Lucro" />
-    <meta name="robots" content="index, follow" />
-
-    <!-- OPEN GRAPH -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Código do Lucro - Pare de Adivinhar Preços" />
-    <meta property="og:description" content="O método definitivo para precificar projetos de engenharia com precisão cirúrgica." />
-    <meta property="og:image" content="https://lh3.googleusercontent.com/aida-public/AB6AXuC8SXk1ZzsB26rNTF-IflwV9VVgliHldUUm--yHf3umtWdA5prC-cdtQPAoXppc2_4r5cRHPpCk9w6GmRrbS8DBAw3geSWIZ_qxWo1w7CjmAAt4jZBNDsLAi1juo9pEqbfXMbDGv6Cg_HHuBHnGw2-t5qy1ku_HPIXjozCUcGaJ4KnqXsQAdwv0aCQpgV9RH8WZfsqrnOq3Idjh6F5V6G7j4HY7w28FZhA1FraRSAwRvkLczGKe8pHKnf8Ro3LpPm4g5IqMr__Tapw" />
-    <meta property="og:url" content="https://tudominio.com" />
-
+    
     <!-- Tailwind CSS v3 -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     
@@ -35,12 +25,7 @@
             container: {
               center: true,
               padding: '1.5rem',
-              screens: {
-                sm: '600px',
-                md: '728px',
-                lg: '984px',
-                xl: '1240px',
-              },
+              screens: { sm: '600px', md: '728px', lg: '984px', xl: '1240px' },
             },
             extend: {
               colors: {
@@ -49,9 +34,7 @@
                 accentGold: '#ffb74d',
                 cardBg: '#0b121e',
               },
-              fontFamily: {
-                sans: ['Montserrat', 'sans-serif'],
-              },
+              fontFamily: { sans: ['Montserrat', 'sans-serif'] },
               boxShadow: {
                 'glow-green': '0 0 25px rgba(0, 230, 118, 0.25)',
                 'glow-gold': '0 0 20px rgba(255, 183, 77, 0.2)',
@@ -75,21 +58,62 @@
         body {
             background-color: #02060d;
             font-family: 'Montserrat', sans-serif;
-            overflow-x: hidden; /* Vital para que la animación lateral no cree scroll horizontal */
+            overflow-x: hidden;
             color: #e5e7eb;
         }
 
-        /* PARALLAX GRID BACKGROUND */
-        .bg-grid-animation {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+        /* --- BACKGROUND LAYERS (CORREGIDO) --- */
+        
+        /* 1. Fondo Radial (Capa más baja) */
+        .bg-layer-1 {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 0%, #0f331e 0%, #02060d 70%);
+            z-index: -10;
+        }
+
+        /* 2. Grid Animation (Encima del fondo) */
+        .bg-layer-2 {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-size: 60px 60px;
             background-image: 
                 linear-gradient(to right, rgba(0, 230, 118, 0.03) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(0, 230, 118, 0.03) 1px, transparent 1px);
-            z-index: -1;
-            transform: translateZ(0); 
+            z-index: -9;
             animation: gridMove 30s linear infinite;
+        }
+
+        /* 3. Floating Symbols (Encima del grid, debajo del contenido) */
+        #floating-symbols-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: -5; /* Clave: Mayor que -10, menor que el contenido */
+            overflow: hidden;
+        }
+
+        /* SYMBOL STYLES */
+        .math-symbol {
+            position: absolute;
+            bottom: -100px;
+            opacity: 0;
+            animation: floatUp linear infinite; /* Infinite loop */
+            color: rgba(255, 255, 255, 0.08); /* Aumentado al 8% de opacidad */
+        }
+        
+        .math-symbol.green { color: rgba(0, 230, 118, 0.12); } /* Aumentado */
+        .math-symbol.gold { color: rgba(255, 183, 77, 0.12); } /* Aumentado */
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            10% { opacity: 0.4; } /* Visible al inicio */
+            80% { opacity: 0.4; } /* Visible durante el trayecto */
+            100% {
+                transform: translateY(-120vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
         }
 
         @keyframes gridMove {
@@ -97,78 +121,32 @@
             100% { background-position: 0 60px; }
         }
 
-        /* SVG ANIMATION */
-        .draw-path {
-            stroke-dasharray: 100;
-            stroke-dashoffset: 100;
-            animation: draw 2s ease-out forwards;
-        }
-        .group:hover .draw-path {
-            stroke-dashoffset: 100; 
-            animation: draw 1.5s ease-out forwards; 
-        }
+        /* --- ANIMATIONS & UTILS --- */
+        .draw-path { stroke-dasharray: 100; stroke-dashoffset: 100; animation: draw 2s ease-out forwards; }
+        .group:hover .draw-path { stroke-dashoffset: 100; animation: draw 1.5s ease-out forwards; }
         @keyframes draw { to { stroke-dashoffset: 0; } }
 
-        /* --- ANIMACIONES DE ENTRADA (REVEAL) --- */
-        
-        /* 1. Reveal Vertical (Estándar) */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
-            will-change: opacity, transform;
-        }
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); will-change: opacity, transform; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* 2. Reveal desde la IZQUIERDA (Slide In Left) */
-        .reveal-left {
-            opacity: 0;
-            transform: translateX(-100px); /* Viene desde fuera a la izquierda */
-            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
-            will-change: opacity, transform;
-        }
+        .reveal-left { opacity: 0; transform: translateX(-100px); transition: all 1s cubic-bezier(0.5, 0, 0, 1); will-change: opacity, transform; }
         .reveal-left.active { opacity: 1; transform: translateX(0); }
 
-        /* 3. Reveal desde la DERECHA (Slide In Right) */
-        .reveal-right {
-            opacity: 0;
-            transform: translateX(100px); /* Viene desde fuera a la derecha */
-            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
-            will-change: opacity, transform;
-        }
+        .reveal-right { opacity: 0; transform: translateX(100px); transition: all 1s cubic-bezier(0.5, 0, 0, 1); will-change: opacity, transform; }
         .reveal-right.active { opacity: 1; transform: translateX(0); }
 
-
-        /* MODULE UNFOLD LOGIC */
-        .module-card {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
+        .module-card { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
         .module-card.active { opacity: 1; transform: translateY(0); }
 
-        .module-content {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-in;
-        }
-        .module-card.active .module-content {
-            max-height: 300px;
-            opacity: 1;
-        }
+        .module-content { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-in; }
+        .module-card.active .module-content { max-height: 300px; opacity: 1; }
         
-        /* Icon Interaction */
         .module-icon-wrapper { transition: transform 0.4s ease; }
         .module-card.active .module-icon-wrapper { transform: scale(1.1) rotate(5deg); }
 
-        /* BUTTON EFFECTS */
         .custom-btn-hover:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(0, 230, 118, 0.5); }
-        
-        /* SHINE ANIMATION */
         @keyframes shine { 100% { left: 200%; } }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: #02060d; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 5px; border: 2px solid #02060d; }
@@ -177,9 +155,10 @@
 
 <body class="antialiased">
 
-    <!-- GLOBAL BACKGROUND RADIAL -->
-    <div class="fixed inset-0 z-0 pointer-events-none" style="background: radial-gradient(circle at 50% 0%, #0f331e 0%, #02060d 70%);"></div>
-    <div class="bg-grid-animation pointer-events-none"></div>
+    <!-- LAYERS DE FONDO (Ordenados por z-index negativo) -->
+    <div class="bg-layer-1"></div> <!-- Radial Gradient -->
+    <div class="bg-layer-2"></div> <!-- Grid Tecnológico -->
+    <div id="floating-symbols-container"></div> <!-- Símbolos SVG Flotantes -->
 
     <main class="relative z-10">
 
@@ -199,10 +178,9 @@
                 Engenheiro: aprenda a precificar projetos com <span class="text-white font-bold">precisão cirúrgica</span> e dobre seus lucros antes de iniciar a obra.
             </p>
 
-            <!-- 1. VIDEO PLACEHOLDER -->
+            <!-- VIDEO -->
             <div class="reveal relative w-full max-w-4xl aspect-video bg-black rounded-2xl shadow-glow-green border border-gray-800 flex items-center justify-center group cursor-pointer overflow-hidden transform transition hover:scale-[1.01] duration-500 mb-10" style="transition-delay: 200ms;">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20"></div>
-                <!-- Play Button -->
                 <div class="relative z-10 w-20 h-20 flex items-center justify-center">
                     <div class="absolute w-full h-full rounded-full bg-accentGreen opacity-20 animate-ping"></div>
                     <div class="relative w-20 h-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center group-hover:bg-accentGreen group-hover:text-black transition-colors duration-300">
@@ -214,7 +192,7 @@
                 </div>
             </div>
             
-            <!-- 2. CTA BUTTON -->
+            <!-- CTA BUTTON -->
             <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto mb-0 reveal" style="transition-delay: 300ms;">
                 <a href="#pricing" class="relative overflow-hidden bg-accentGreen text-black font-extrabold py-4 px-10 rounded-full text-base md:text-lg shadow-[0_0_20px_rgba(0,230,118,0.4)] transition-all custom-btn-hover animate-pulse-slow text-center group">
                     <span class="relative z-10">QUERO SABER MAIS</span>
@@ -225,7 +203,7 @@
         </header>
 
         <!-- PROBLEM SECTION (ANIMACIÓN LATERAL) -->
-        <section class="pt-12 pb-20 px-4 bg-gradient-to-b from-transparent to-[#050b16]">
+        <section class="pt-12 pb-20 px-4 bg-gradient-to-b from-transparent to-[#050b16] relative z-20">
             <div class="container mx-auto max-w-7xl">
                 <div class="text-center mb-16 reveal">
                     <h2 class="text-3xl md:text-4xl font-bold text-white mb-2">O Problema Oculto</h2>
@@ -233,74 +211,44 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    
-                    <!-- Card 1: Slide from LEFT -->
+                    <!-- Card 1 -->
                     <div class="reveal-left bg-cardBg border border-gray-800 p-6 rounded-2xl text-center shadow-lg hover:border-accentGreen/50 transition duration-300 group">
                         <div class="flex justify-center mb-4 h-10">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00e676" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10" class="draw-path"></circle>
-                                <line x1="12" y1="8" x2="12" y2="12" class="draw-path"></line>
-                                <line x1="12" y1="16" x2="12.01" y2="16" class="draw-path"></line>
-                            </svg>
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00e676" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" class="draw-path"></circle><line x1="12" y1="8" x2="12" y2="12" class="draw-path"></line><line x1="12" y1="16" x2="12.01" y2="16" class="draw-path"></line></svg>
                         </div>
                         <h3 class="text-white font-bold text-lg mb-2">O Medo do Chute</h3>
-                        <p class="text-gray-400 text-xs leading-relaxed">
-                            A angústia de enviar um preço sem ter certeza se cobriu todos os custos reais.
-                        </p>
+                        <p class="text-gray-400 text-xs leading-relaxed">A angústia de enviar um preço sem ter certeza se cobriu todos os custos reais.</p>
                     </div>
-
-                    <!-- Card 2: Slide from LEFT (delayed) -->
+                    <!-- Card 2 -->
                     <div class="reveal-left bg-cardBg border border-gray-800 p-6 rounded-2xl text-center shadow-lg hover:border-accentGreen/50 transition duration-300 group" style="transition-delay: 150ms;">
                         <div class="flex justify-center mb-4 h-10">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00e676" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" class="draw-path"></path>
-                                <polyline points="14 2 14 8 20 8" class="draw-path"></polyline>
-                                <line x1="16" y1="13" x2="8" y2="13" class="draw-path"></line>
-                            </svg>
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00e676" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" class="draw-path"></path><polyline points="14 2 14 8 20 8" class="draw-path"></polyline><line x1="16" y1="13" x2="8" y2="13" class="draw-path"></line></svg>
                         </div>
                         <h3 class="text-white font-bold text-lg mb-2">Custos Invisíveis</h3>
-                        <p class="text-gray-400 text-xs leading-relaxed">
-                            Impostos e encargos sociais que comem seu lucro silenciosamente no final da obra.
-                        </p>
+                        <p class="text-gray-400 text-xs leading-relaxed">Impostos e encargos sociais que comem seu lucro silenciosamente no final da obra.</p>
                     </div>
-
-                    <!-- Card 3: Slide from RIGHT (delayed) -->
+                    <!-- Card 3 -->
                     <div class="reveal-right bg-cardBg border border-gray-800 p-6 rounded-2xl text-center shadow-lg hover:border-accentGreen/50 transition duration-300 group" style="transition-delay: 150ms;">
                         <div class="flex justify-center mb-4 h-10">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00e676" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M5 22h14" class="draw-path"></path>
-                                <path d="M5 2h14" class="draw-path"></path>
-                                <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" class="draw-path"></path>
-                                <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" class="draw-path"></path>
-                            </svg>
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00e676" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14" class="draw-path"></path><path d="M5 2h14" class="draw-path"></path><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" class="draw-path"></path><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" class="draw-path"></path></svg>
                         </div>
                         <h3 class="text-white font-bold text-lg mb-2">Refém da Obra</h3>
-                        <p class="text-gray-400 text-xs leading-relaxed">
-                            Virar "funcionário" do próprio projeto, sem tempo para crescer ou buscar novos clientes.
-                        </p>
+                        <p class="text-gray-400 text-xs leading-relaxed">Virar "funcionário" do próprio projeto, sem tempo para crescer ou buscar novos clientes.</p>
                     </div>
-
-                    <!-- Card 4: Slide from RIGHT -->
+                    <!-- Card 4 -->
                     <div class="reveal-right bg-cardBg border border-gray-800 p-6 rounded-2xl text-center shadow-lg hover:border-accentGreen/50 transition duration-300 group">
                         <div class="flex justify-center mb-4 h-10">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00e676" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="19" y1="5" x2="5" y2="19" class="draw-path"></line>
-                                <circle cx="6.5" cy="6.5" r="2.5" class="draw-path"></circle>
-                                <circle cx="17.5" cy="17.5" r="2.5" class="draw-path"></circle>
-                            </svg>
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00e676" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="5" x2="5" y2="19" class="draw-path"></line><circle cx="6.5" cy="6.5" r="2.5" class="draw-path"></circle><circle cx="17.5" cy="17.5" r="2.5" class="draw-path"></circle></svg>
                         </div>
                         <h3 class="text-white font-bold text-lg mb-2">Desconto por Medo</h3>
-                        <p class="text-gray-400 text-xs leading-relaxed">
-                            Ceder à pressão do cliente e dar desconto por não confiar nos seus próprios números.
-                        </p>
+                        <p class="text-gray-400 text-xs leading-relaxed">Ceder à pressão do cliente e dar desconto por não confiar nos seus próprios números.</p>
                     </div>
-
                 </div>
             </div>
         </section>
 
         <!-- SOLUTION SECTION -->
-        <section class="py-20 px-4">
+        <section class="py-20 px-4 relative z-20">
             <div class="container mx-auto max-w-6xl flex flex-col md:flex-row items-center gap-12">
                 <div class="w-full md:w-1/2 reveal">
                     <div class="relative aspect-square max-w-md mx-auto rounded-2xl overflow-hidden border border-accentGreen/30 shadow-glow-green animate-float">
@@ -324,29 +272,26 @@
         </section>
 
         <!-- MODULES SECTION -->
-        <section class="py-20 px-4 bg-gray-900/40 border-y border-white/5">
+        <section class="py-20 px-4 bg-gray-900/40 border-y border-white/5 relative z-20">
             <div class="container mx-auto max-w-4xl">
                 <div class="text-center mb-12 reveal">
                     <h3 class="text-2xl md:text-3xl font-bold text-white uppercase">O Caminho da Maestria</h3>
                     <p class="text-gray-500 mt-2">6 Passos para o Domínio Financeiro da Obra</p>
                 </div>
-                
                 <div class="space-y-4">
-                    <!-- Módulos 1-5 -->
+                    <!-- Modules 1-5 -->
                     <article class="module-card bg-cardBg border border-white/10 rounded-xl shadow-sm overflow-hidden hover:border-white/20 transition-colors">
                         <div class="flex items-center p-5 md:p-6 relative z-10 bg-cardBg cursor-default">
                             <div class="module-icon-wrapper mr-5 bg-white/5 p-3 rounded-lg"><i class="fas fa-calculator text-accentGold text-xl md:text-2xl"></i></div>
-                            <div class="flex-1"><span class="text-accentGreen text-xs font-bold uppercase tracking-widest block mb-1">Módulo 01</span><h4 class="text-white text-base md:text-lg font-bold">Fundamentos de Custo & BDI</h4></div>
-                            <i class="fas fa-chevron-down text-gray-600"></i>
+                            <div class="flex-1"><span class="text-accentGreen text-xs font-bold uppercase tracking-widest block mb-1">Módulo 01</span><h4 class="text-white text-base md:text-lg font-bold">Fundamentos de Custo & BDI</h4></div><i class="fas fa-chevron-down text-gray-600"></i>
                         </div>
-                        <div class="module-content px-6 md:px-8 pb-6 bg-cardBg/50"><p class="text-gray-400 text-sm md:text-base leading-relaxed border-l-2 border-accentGreen pl-4">Aprenda a diferenciar custos diretos, indiretos e invisíveis. Desenvolva um BDI matematicamente perfeito.</p></div>
+                        <div class="module-content px-6 md:px-8 pb-6 bg-cardBg/50"><p class="text-gray-400 text-sm md:text-base leading-relaxed border-l-2 border-accentGreen pl-4">Aprenda a diferenciar custos diretos, indiretos e invisíveis.</p></div>
                     </article>
 
                     <article class="module-card bg-cardBg border border-white/10 rounded-xl shadow-sm overflow-hidden hover:border-white/20 transition-colors">
                         <div class="flex items-center p-5 md:p-6 relative z-10 bg-cardBg cursor-default">
                             <div class="module-icon-wrapper mr-5 bg-white/5 p-3 rounded-lg"><i class="fas fa-search-dollar text-accentGold text-xl md:text-2xl"></i></div>
-                            <div class="flex-1"><span class="text-accentGreen text-xs font-bold uppercase tracking-widest block mb-1">Módulo 02</span><h4 class="text-white text-base md:text-lg font-bold">Análise de Mercado</h4></div>
-                            <i class="fas fa-chevron-down text-gray-600"></i>
+                            <div class="flex-1"><span class="text-accentGreen text-xs font-bold uppercase tracking-widest block mb-1">Módulo 02</span><h4 class="text-white text-base md:text-lg font-bold">Análise de Mercado</h4></div><i class="fas fa-chevron-down text-gray-600"></i>
                         </div>
                         <div class="module-content px-6 md:px-8 pb-6 bg-cardBg/50"><p class="text-gray-400 text-sm md:text-base leading-relaxed border-l-2 border-accentGreen pl-4">Como espionar eticamente a concorrência e posicionar seu preço.</p></div>
                     </article>
@@ -354,8 +299,7 @@
                     <article class="module-card bg-cardBg border border-white/10 rounded-xl shadow-sm overflow-hidden hover:border-white/20 transition-colors">
                         <div class="flex items-center p-5 md:p-6 relative z-10 bg-cardBg cursor-default">
                             <div class="module-icon-wrapper mr-5 bg-white/5 p-3 rounded-lg"><i class="fas fa-chart-pie text-accentGold text-xl md:text-2xl"></i></div>
-                            <div class="flex-1"><span class="text-accentGreen text-xs font-bold uppercase tracking-widest block mb-1">Módulo 03</span><h4 class="text-white text-base md:text-lg font-bold">Precificação Estratégica</h4></div>
-                            <i class="fas fa-chevron-down text-gray-600"></i>
+                            <div class="flex-1"><span class="text-accentGreen text-xs font-bold uppercase tracking-widest block mb-1">Módulo 03</span><h4 class="text-white text-base md:text-lg font-bold">Precificação Estratégica</h4></div><i class="fas fa-chevron-down text-gray-600"></i>
                         </div>
                         <div class="module-content px-6 md:px-8 pb-6 bg-cardBg/50"><p class="text-gray-400 text-sm md:text-base leading-relaxed border-l-2 border-accentGreen pl-4">A matemática exata da Margem de Contribuição.</p></div>
                     </article>
@@ -363,8 +307,7 @@
                     <article class="module-card bg-cardBg border border-white/10 rounded-xl shadow-sm overflow-hidden hover:border-white/20 transition-colors">
                         <div class="flex items-center p-5 md:p-6 relative z-10 bg-cardBg cursor-default">
                             <div class="module-icon-wrapper mr-5 bg-white/5 p-3 rounded-lg"><i class="fas fa-handshake text-accentGold text-xl md:text-2xl"></i></div>
-                            <div class="flex-1"><span class="text-accentGreen text-xs font-bold uppercase tracking-widest block mb-1">Módulo 04</span><h4 class="text-white text-base md:text-lg font-bold">Negociação & Fechamento</h4></div>
-                            <i class="fas fa-chevron-down text-gray-600"></i>
+                            <div class="flex-1"><span class="text-accentGreen text-xs font-bold uppercase tracking-widest block mb-1">Módulo 04</span><h4 class="text-white text-base md:text-lg font-bold">Negociação & Fechamento</h4></div><i class="fas fa-chevron-down text-gray-600"></i>
                         </div>
                         <div class="module-content px-6 md:px-8 pb-6 bg-cardBg/50"><p class="text-gray-400 text-sm md:text-base leading-relaxed border-l-2 border-accentGreen pl-4">Scripts de vendas e gatilhos mentais para fechar contratos.</p></div>
                     </article>
@@ -372,19 +315,17 @@
                     <article class="module-card bg-cardBg border border-white/10 rounded-xl shadow-sm overflow-hidden hover:border-white/20 transition-colors">
                         <div class="flex items-center p-5 md:p-6 relative z-10 bg-cardBg cursor-default">
                             <div class="module-icon-wrapper mr-5 bg-white/5 p-3 rounded-lg"><i class="fas fa-laptop-code text-accentGold text-xl md:text-2xl"></i></div>
-                            <div class="flex-1"><span class="text-accentGreen text-xs font-bold uppercase tracking-widest block mb-1">Módulo 05</span><h4 class="text-white text-base md:text-lg font-bold">Ferramentas Digitais</h4></div>
-                            <i class="fas fa-chevron-down text-gray-600"></i>
+                            <div class="flex-1"><span class="text-accentGreen text-xs font-bold uppercase tracking-widest block mb-1">Módulo 05</span><h4 class="text-white text-base md:text-lg font-bold">Ferramentas Digitais</h4></div><i class="fas fa-chevron-down text-gray-600"></i>
                         </div>
                         <div class="module-content px-6 md:px-8 pb-6 bg-cardBg/50"><p class="text-gray-400 text-sm md:text-base leading-relaxed border-l-2 border-accentGreen pl-4">Automação e softwares essenciais.</p></div>
                     </article>
 
-                    <!-- Módulo 6 (Bônus) -->
+                    <!-- Module 6 -->
                     <article class="module-card relative bg-gradient-to-r from-yellow-900/30 to-cardBg border border-accentGold rounded-xl shadow-[0_0_15px_rgba(255,183,77,0.15)] overflow-hidden group">
                         <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none"></div>
                         <div class="flex items-center p-5 md:p-6 relative z-10 cursor-default">
                             <div class="module-icon-wrapper mr-5 bg-accentGold/10 p-3 rounded-lg border border-accentGold/30"><i class="fas fa-gift text-accentGold text-xl md:text-2xl animate-pulse"></i></div>
-                            <div class="flex-1"><span class="text-accentGold text-xs font-bold uppercase tracking-widest mb-1 flex items-center gap-2"><i class="fas fa-star text-[10px]"></i> Bônus Exclusivo</span><h4 class="text-white text-base md:text-lg font-bold">Módulo 06: A Planilha Mestra na Prática</h4></div>
-                            <i class="fas fa-chevron-down text-accentGold"></i>
+                            <div class="flex-1"><span class="text-accentGold text-xs font-bold uppercase tracking-widest mb-1 flex items-center gap-2"><i class="fas fa-star text-[10px]"></i> Bônus Exclusivo</span><h4 class="text-white text-base md:text-lg font-bold">Módulo 06: A Planilha Mestra na Prática</h4></div><i class="fas fa-chevron-down text-accentGold"></i>
                         </div>
                         <div class="module-content px-6 md:px-8 pb-6"><p class="text-gray-200 text-sm md:text-base leading-relaxed border-l-2 border-accentGold pl-4">Você vai receber a minha Planilha de Orçamento Automatizada (Excel) e vamos preenchê-la juntos.</p></div>
                     </article>
@@ -393,7 +334,7 @@
         </section>
 
         <!-- PRICING SECTION -->
-        <section class="py-24 px-4 relative overflow-hidden" id="pricing">
+        <section class="py-24 px-4 relative overflow-hidden z-20" id="pricing">
             <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-lg h-full bg-accentGold/5 blur-[80px] rounded-full z-0 pointer-events-none"></div>
             <div class="container mx-auto max-w-lg relative z-10">
                 <div class="reveal bg-[#050b16] border border-accentGold rounded-3xl p-8 md:p-12 text-center shadow-glow-gold hover:shadow-[0_0_40px_rgba(255,183,77,0.3)] transition duration-500">
@@ -415,7 +356,7 @@
         </section>
 
         <!-- FOOTER -->
-        <footer class="py-12 px-6 text-center bg-[#010408] border-t border-white/5 relative z-10">
+        <footer class="py-12 px-6 text-center bg-[#010408] border-t border-white/5 relative z-20">
             <div class="container mx-auto">
                 <div class="mb-12 reveal max-w-2xl mx-auto">
                     <div class="inline-block p-4 rounded-full bg-accentGreen/10 mb-4 border border-accentGreen/20"><i class="fas fa-shield-alt text-4xl text-accentGreen"></i></div>
@@ -436,14 +377,42 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             
-            // CONFIGURATION
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.15 
-            };
+            // --- SYMBOLS GENERATOR ---
+            const symbolsContainer = document.getElementById('floating-symbols-container');
+            const icons = [
+                `<svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40"><path d="M4 5v2h2v14h2V7h5v12h2V7h3V5H4z"/></svg>`, // Pi
+                `<svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40"><path d="M18 4H6v2.5l6 5.5-6 5.5V20h12v-2H8.8l5-4.5-5-4.5H18V4z"/></svg>`, // Sigma
+                `<svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>`, // Dollar
+                `<svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40"><path d="M7.5 11C9.43 11 11 9.43 11 7.5S9.43 4 7.5 4 4 5.57 4 7.5 5.57 11 7.5 11zm0-5C8.33 6 9 6.67 9 7.5S8.33 9 7.5 9 6 8.33 6 7.5 6.67 6 7.5 6zm11.05 4.95L6.5 22.99l1.41 1.41 12.05-12.04-1.41-1.41zM16.5 13c-1.93 0-3.5 1.57-3.5 3.5s1.57 3.5 3.5 3.5 3.5-1.57 3.5-3.5-1.57-3.5-3.5-3.5zm0 5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>`, // Percent
+                `<svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40"><path d="M16.5 8c2.5 0 4.5 1.5 4.5 3s-2 3-4.5 3-4.5-1.5-4.5-3 2-3 4.5-3m-9 4c2.5 0 4.5 1.5 4.5 3s-2 3-4.5 3S3 16.5 3 15s2-3 4.5-3m9-2c-1.75 0-3.35.73-4.06 1.86C11.75 11.2 10.27 10 8.5 10c-3.04 0-5.5 1.79-5.5 4s2.46 4 5.5 4c1.76 0 3.25-1.2 3.94-2.86.71-1.13 2.31-1.86 4.06-1.86 3.04 0 5.5-1.79 5.5-4s-2.46-4-5.5-4z"/></svg>` // Approx
+            ];
 
-            // 1. SCROLL REVEAL (FADE UP & SLIDES)
+            // Increase count for more visibility
+            const symbolCount = 18; 
+
+            for (let i = 0; i < symbolCount; i++) {
+                const el = document.createElement('div');
+                el.classList.add('math-symbol');
+                
+                const variant = Math.random() > 0.6 ? (Math.random() > 0.5 ? 'green' : 'gold') : '';
+                if(variant) el.classList.add(variant);
+
+                el.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+
+                const leftPos = Math.random() * 95; // Keep within screen width
+                const duration = 15 + Math.random() * 15; // 15-30s
+                const delay = Math.random() * 20; 
+                
+                el.style.left = `${leftPos}%`;
+                el.style.animationDuration = `${duration}s`;
+                el.style.animationDelay = `-${delay}s`;
+                
+                symbolsContainer.appendChild(el);
+            }
+
+            // --- SCROLL OBSERVERS ---
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+
             const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -455,13 +424,10 @@
 
             document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObserver.observe(el));
 
-            // 2. MODULE UNFOLD ANIMATION
             const moduleObserver = new IntersectionObserver((entries) => {
                 entries.forEach((entry, index) => {
                     if (entry.isIntersecting) {
-                        setTimeout(() => {
-                            entry.target.classList.add('active');
-                        }, index * 150); 
+                        setTimeout(() => { entry.target.classList.add('active'); }, index * 150);
                         moduleObserver.unobserve(entry.target);
                     }
                 });
@@ -470,6 +436,5 @@
             document.querySelectorAll('.module-card').forEach(el => moduleObserver.observe(el));
         });
     </script>
-
 </body>
 </html>
